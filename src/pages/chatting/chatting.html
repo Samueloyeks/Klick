@@ -1,0 +1,64 @@
+<ion-header>
+
+  <ion-navbar color="hcolor">
+    <ion-title id="uname" (click)="navigateToFriendProfile($event,match.username,match.uid)">{{match.username}}</ion-title>
+    <ion-buttons end>
+      <button id='back' ion-button (click)="sendPicMsg()">
+        <ion-icon id="camera" name="camera"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content #content>
+  <div class="chatWindow">
+
+    <ion-list no-lines>
+
+      <ion-item no-lines *ngFor="let item of allMessages; let i = index" text-wrap>
+        <!-- <ion-avatar item-left *ngIf="item.sentBy === match.uid">
+          <img src="../assets/imgs/background.jpg">
+        </ion-avatar> -->
+        <div class="bubble me" *ngIf="item.sentBy === match.uid">
+
+          <h3 class="line-breaker ">{{item.message}}</h3>
+          <p class="time-me">{{item.time}}</p>
+          <!-- <img src="{{item.message}}" *ngIf="imgornot[i]"> -->
+        </div>
+        <!-- <ion-avatar item-right *ngIf="item.sentBy != match.uid">
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-avatar> -->
+        <div class="bubble you" *ngIf="item.sentBy != match.uid">
+
+          <h3 class="line-breaker ">{{item.message}}</h3>
+          <p class="time-you">{{item.time}}</p>
+          <!-- <img src="{{item.message}}" *ngIf="imgornot[i]"> -->
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </div>
+</ion-content>
+
+
+<ion-footer>
+  <div class="input-wrap" #myFooter>
+    <ion-toolbar class="no-border" color="white">
+      <ion-buttons start>
+        <button ion-button item-left (click)="presentActionSheet()">
+          <ion-icon id="camera2" name="camera" color="primary"></ion-icon>
+        </button>
+      </ion-buttons>
+      <textarea spellcheck="true" padding-left padding-right ng-blur="focus=false" ng-focus="focus=true" #myInput id="myInput" (keyup)="resize()"
+        rows="1/2" [(ngModel)]="newMessage" placeholder="Write a message ..." (focusin)="onFocus()">
+        </textarea>
+      <ion-buttons end>
+        <button ion-button (mousedown)="preventFocusChange($event)" (click)="addMessage()" [disabled]="!newMessage">
+          <ion-icon name="send" id="send" color="primary"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-footer>

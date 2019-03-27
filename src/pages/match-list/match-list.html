@@ -1,0 +1,45 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>MatchList</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+
+<ion-searchbar [(ngModel)]="searchString"  placeholder="search"></ion-searchbar>
+<p padding>Swipe right to send a request and left to discard</p>
+<ion-list no-lines>
+  <ion-item-sliding  *ngFor="let key of filteredMatches | filterBy: ['username']: searchString">
+    <ion-item> 
+      <ion-avatar item-start >
+        <img src="../assets/imgs/avatar-female.png">
+    </ion-avatar>
+    <h2>{{key.username}}</h2>
+    <p>{{key.age}} years old</p>  
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button color="danger">
+        <ion-icon name="close">
+        </ion-icon> 
+        Nope
+      </button>
+    </ion-item-options>
+  
+
+  <ion-item-options side="left">
+      <button ion-button  color="primary" (click)="sendreq(key)">
+        <ion-icon name="checkmark">
+        </ion-icon>
+        Yeah
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+  <!-- <ion-item *ngIf="filteredMatches.length == 0">
+    <h2>Sorry we couldn't find any matches</h2>
+  </ion-item> -->
+</ion-list>
+</ion-content>

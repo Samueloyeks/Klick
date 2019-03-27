@@ -1,0 +1,61 @@
+
+<ion-header no-border >
+    <ion-navbar>     
+      <button class="eye"ion-button clear item-left  (click)="navigateToIntro()">
+        <ion-icon id="back" icon-only name="arrow-back">
+        </ion-icon>
+      </button>
+    </ion-navbar>
+  </ion-header>
+
+ 
+  
+  <ion-content padding class="auth-page" disable-scroll>
+    <div class="appname">
+      <h2 class="klick">Klick</h2>
+    </div><br><br>
+    
+    <form  [formGroup]="loginForm" (submit)="navigateToTabs()" novalidate>
+        <ion-item class="loginInput"[class.invalid]="!loginForm.controls.email.valid && loginForm.controls.email.touched"
+        [class.valid]="loginForm.controls.email.valid && loginForm.controls.email.touched">
+
+        <ion-input formControlName="email" type="email" placeholder="Email">
+          </ion-input>
+      </ion-item>
+
+      <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid &&
+      loginForm.controls.email.touched">
+       <p>Please enter a valid email address.</p>
+     </ion-item>
+
+      <br>
+      <br>
+      <ion-item class="loginInput"[class.invalid]="!loginForm.controls.password.valid && loginForm.controls.password.touched"
+      [class.valid]="loginForm.controls.password.valid && loginForm.controls.password.touched">
+
+        <ion-input [type]="passwordType" formControlName="password"  placeholder="Password"></ion-input>
+        <ion-icon class="eye" [name]="passwordShown === true ? 'eye':'eye-off' " item-end color="primary" (click)="togglePassword()"></ion-icon>
+      </ion-item>
+
+      <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid
+    && loginForm.controls.password.touched">
+      <p>Your password needs more than 6 characters.</p>
+    </ion-item> 
+      <br>
+  
+      <button ion-button round medium class="buttons" full type="submit" [disabled]="!loginForm.valid">
+          Log In
+        </button>
+      <!-- <button ion-button *ngIf="!email && !password" color="purple" round medium full >Login</button>
+      <button ion-button *ngIf="email && !password" color="purple" round medium full >Login</button>
+      <button ion-button *ngIf="!email && password" color="purple" round medium full >Login</button> -->
+  </form>
+  <p>Don't have an account?</p>
+  <button ion-button color="cyan" class="buttons"round (click)="navigateToSignup()" medium full>Sign up</button>
+  <br>
+  <ion-buttons end>
+    <p>
+      <button ion-button clear class="forgot" end (click)="navigateToForgotPassword()">Forgot password?</button>
+    </p>
+  </ion-buttons>
+  </ion-content>

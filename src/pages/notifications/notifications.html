@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Notifications</ion-title>
+
+    <button ion-button clear menuToggle>
+      <ion-icon id="menu" name="menu"></ion-icon>
+    </button>
+
+
+    <ion-buttons end>
+      <button ion-button clear end>
+        <ion-icon id="create" name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header> 
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-down" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div padding>
+    <ion-segment [(ngModel)]="notifications">
+      <ion-segment-button value="All">
+        All
+      </ion-segment-button>
+      <ion-segment-button value="Tagged">
+        Tagged
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="notifications">
+    <ion-list *ngSwitchCase="'All'">
+
+        <ion-item-sliding *ngFor="let item of myRequests">
+            <ion-item (click)="presentActionSheet()">
+              <ion-avatar item-start>
+                <img src="../assets/imgs/background.jpg">
+              </ion-avatar>
+              <h2>{{item.username}} sent you a request</h2>
+            </ion-item>
+  
+            <ion-item-options side="left">
+              <button ion-button color="secondary" (click)="accept(item)">
+                <ion-icon name="check-mark"></ion-icon>
+                Yeah
+              </button>           
+            </ion-item-options>
+  
+            <ion-item-options side="right">
+              <button ion-button color="danger" (click)="ignore(item)">
+                <ion-icon name="trash"></ion-icon>
+                Nope
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+
+
+
+          <ion-item-sliding *ngFor="let item of myAccepts">
+            <ion-item (click)="presentActionSheet()">
+              <ion-avatar item-start>
+                <img src="../assets/imgs/background.jpg">
+              </ion-avatar>
+              <h2>{{item.username}} accepted your request</h2>
+            </ion-item>
+  
+  
+            <ion-item-options side="right">
+              <button ion-button color="danger" (click)="remove(item)">
+                <ion-icon name="trash"></ion-icon>
+                Remove
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'Tagged'">
+        <ion-item-sliding *ngFor="let item of myRequests">
+            <ion-item (click)="presentActionSheet()">
+              <ion-avatar item-start>
+                <img src="../assets/imgs/background.jpg">
+              </ion-avatar>
+              <h2>{{item.username}} sent you a request</h2>
+            </ion-item>
+  
+            <ion-item-options side="right">
+              <button ion-button color="secondary" (click)="accept(item)">
+                <ion-icon name="check-mark"></ion-icon>
+                Yeah
+              </button>           
+            </ion-item-options>
+  
+            <ion-item-options side="right">
+              <button ion-button color="danger" (click)="ignore(item)">
+                <ion-icon name="trash"></ion-icon>
+                Nope
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+    </ion-list>
+
+  </div>
+</ion-content>

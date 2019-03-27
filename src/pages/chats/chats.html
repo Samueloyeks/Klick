@@ -1,0 +1,28 @@
+ 
+<ion-content #myContent> 
+    <ion-list-header>
+        <h1>ACTIVE</h1>
+        <ion-searchbar  [(ngModel)]="searchstring" (input)="searchUser($event)" placeholder="Search" [ngClass]="{'opaque':isScroll<60}"></ion-searchbar>
+      </ion-list-header>
+
+      <!-- <shrinking-segment-header [scrollArea]="myContent" headerHeight="150">
+      </shrinking-segment-header> -->
+
+    <ion-list>
+        <ion-item  *ngFor="let item of myTempFriends " (click)="matchChat(item)">
+          <ion-avatar item-left>
+            <img src="../assets/imgs/background.jpg">
+          </ion-avatar>
+          <div class="time">
+            <h3>{{item.username}}</h3>
+            <p>2:22AM</p>
+          </div>
+    
+          <div *ngFor="let id of tempFriendsuid">
+            <p id="lastMessage" *ngIf="id === item.uid">{{lastMessage}}</p>
+          </div>
+        </ion-item>
+      </ion-list>    
+
+  
+</ion-content>

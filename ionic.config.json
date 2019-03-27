@@ -1,0 +1,10 @@
+{
+  "name": "Klick",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "a9c00f4d",
+  "id": "a9c00f4d"
+}

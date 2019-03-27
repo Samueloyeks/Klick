@@ -1,0 +1,98 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-avatar item-start>
+        <img src="../assets/imgs/background.jpg">
+      </ion-avatar>
+      <h1>{{userProfile?.username}}</h1>
+    </ion-list-header>
+    <button ion-button small color="blue" full round (click)="navigateToEditProfile()">Edit profile</button>
+    <ion-item text-wrap>
+      <!-- <button ion-button  clear class="item-start"> -->
+        <!-- <ion-icon name="create"></ion-icon> -->
+        <p class="text" (click)="updateStatus()">Update Status</p>
+      <!-- </button> -->
+      <p>
+        {{userProfile?.status}}
+      </p>
+
+    </ion-item>
+    <ion-item>
+      <p>{{userInfo?.location}}</p>
+      <p>Born:{{userProfile?.dob|date}}</p>
+      <p>Gender:{{userProfile?.gender}}</p>
+      <p>Joined:{{createdAt | date}}</p>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <img src="../assets/imgs/background.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/background.jpg">
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/background.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <img src="../assets/imgs/background.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/background.jpg">
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/background.jpg">
+        </ion-col>
+        <ion-col>
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <img src="../assets/imgs/yinyang.jpg">
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-list>
+</ion-content>

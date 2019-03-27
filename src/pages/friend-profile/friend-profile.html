@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{friendUsername}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+     <span> <ion-avatar item-center id="avatar">
+        <img src="../assets/imgs/background.jpg" >
+      </ion-avatar>
+      <h1 id="username" >{{friendUsername}}</h1></span>
+      <p text-wrap id="status">{{friendProfile?.status}}</p>
+    </ion-list-header>
+    <!-- <ion-item text-wrap no-lines> 
+    
+    </ion-item> -->
+    <ion-item>
+      <p>Born:{{friendProfile?.dob|date}}</p>
+      <p>Gender:{{friendProfile?.gender}}</p>
+    </ion-item>
+   
+
+    <p text-wrap padding>{{friendUsername}} has not given you permission to see {{genderWord}} profile</p>
+  </ion-list>
+</ion-content>

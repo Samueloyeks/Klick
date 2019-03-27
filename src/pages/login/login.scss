@@ -1,0 +1,78 @@
+page-login {
+  @font-face{
+    font-family: paytoneOne;
+    src: url("../../assets/fonts/paytoneOne")
+    // src: url("https://fonts.googleapis.com/css?family=Quantico");
+}
+     #back::before{display:none;}
+    .toolbar-content{background: cornsilk !important;}
+    .toolbar-background{background: cornsilk !important;}
+
+    ion-input{color:#FEA603}
+    h2 {color: #FEA603;text-decoration-style: wavy;}
+    
+    
+     p{color:#FEA603;text-align: center !important;}
+
+     .appname{
+       text-align: center !important;
+       .klick{
+        font-size: -webkit-xxx-large !important;
+        font-family: paytone one;
+      }
+    } 
+   .eye{color:#FEA603}
+    
+    
+     .auth-page {
+        .invalid {
+            .item-inner {
+              border: 0;
+            }
+            ion-input {
+              border-bottom: 1px solid red;
+            }
+            background-color: cornsilk !important;
+          }
+        
+          .valid {
+            .item-inner {
+              border: 0;
+            }
+            ion-input {
+              border-bottom: 1px solid cyan;
+            }
+            background-color: cornsilk !important;
+          }
+        
+          .error-message {
+            min-height: 2.2rem;
+            p {
+              font-size: 80%;
+            }
+            ion-label {
+              margin: 4px 0;
+            }
+            .item-inner {
+              border-bottom: 0 !important;
+            }
+            background-color: cornsilk !important;
+            color:red;
+            
+          }
+          .buttons{
+            background-color: #FEA603 !important;
+            // color:black;
+          }
+        
+         .forgot{
+           color:#FEA603 !important;
+         }
+         .loginInput{
+           background-color: cornsilk;
+         }
+          background-color: cornsilk;
+        }
+        
+    
+}

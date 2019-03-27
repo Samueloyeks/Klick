@@ -1,0 +1,36 @@
+<ion-menu [content]="content" id="myMenu" type="overlay">
+    <ion-content>
+      <ion-list no-lines>
+                <button ion-item menuClose clear (click)="navigateToProfile()">
+                  <ion-avatar item-start>
+                    <img src="../assets/imgs/background.jpg">
+                  </ion-avatar><p> View your profile</p>{{userProfile?.username}}
+                </button><br>
+                     
+        <button ion-item menuClose (click)="navigateToMain()">
+             View posts                        
+        </button>
+        <button ion-item menuClose (click)="navigateToTempFriendsList()">
+               Temporary Match list
+          </button>
+          <button ion-item menuClose (click)="navigateToFriendsList()">
+                Matchlist
+            </button>
+            <button ion-item menuClose (click)="navigateToMain()">
+                   Add more klick info
+              </button>
+              <button ion-item menuClose (click)="navigateToMain()">
+                     Settings
+                </button>
+                <button ion-item menuClose (click)="presentActionSheet()">
+                       Help and support
+                  </button>
+                 
+                  <button ion-item menuClose (click)="presentActionSheet()">
+                        Log out
+                    </button>
+       
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-nav #content swipeBackEnabled="false" [root]="rootPage"></ion-nav>

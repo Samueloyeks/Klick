@@ -1,0 +1,373 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Feed</ion-title>
+
+        <button ion-button clear menuToggle>
+            <ion-icon  id="menu" name="menu"></ion-icon>
+        </button>
+
+
+        <ion-buttons end>
+            <button ion-button clear end>
+                <ion-icon  id="create" name="create"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-down" refreshingSpinner="circles">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="../assets/imgs/background.jpg">
+            </ion-avatar>
+            <h2>Joy</h2>
+            <h4>Today at 3:44 PM</h4>
+            <ion-buttons medium item-end>
+                <button ion-button medium clear item-end (click)="presentActionSheet()">
+                    <ion-icon class="icons" name="more" item-end>
+                    </ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <ion-slides pager="true" parallax="true">
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/yinyang.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+        </ion-slides>
+
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear start>
+                        <ion-icon class="icons" name="heart" color="danger"></ion-icon >
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" class="icons" name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="send"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+        </ion-row>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="../assets/imgs/background.jpg">
+            </ion-avatar>
+            <h2>Joy</h2>
+            <h4>Yesterday at 5:37 AM</h4>
+            <ion-buttons medium item-end>
+                <button ion-button medium clear item-end (click)="presentActionSheet()">
+                    <ion-icon class="icons" name="more" item-end>
+                    </ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <p padding>Really really looking forward to leaving this school.</p>
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear start>
+                        <ion-icon  name="heart-outline"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="send"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+        </ion-row>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="../assets/imgs/yinyang.jpg">
+            </ion-avatar>
+            <h2>Lara</h2>
+            <h4>Wednesday ay 4:22 PM</h4>
+            <ion-buttons medium item-end>
+                <button ion-button medium clear item-end (click)="presentActionSheet()">
+                    <ion-icon class="icons" name="more" item-end>
+                    </ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <ion-slides pager="true" parallax="true">
+            <ion-slide>
+                <img src="../assets/imgs/yinyang.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+        </ion-slides>
+
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear start>
+                        <ion-icon class="icons" name="heart" color="danger"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="send"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+        </ion-row>
+
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="../assets/imgs/yinyang.jpg">
+            </ion-avatar>
+            <h2>Jessieny</h2>
+            <h4>Today at 2:30 PM</h4>
+            <ion-buttons medium item-end>
+                <button ion-button medium clear item-end (click)="presentActionSheet()">
+                    <ion-icon class="icons" name="more" item-end>
+                    </ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <ion-slides pager="true" parallax="true">
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/yinyang.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+        </ion-slides>
+
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear start>
+                        <ion-icon  name="heart-outline"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear icon-only>
+                        <ion-icon class="icons" name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="send"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+        </ion-row>
+
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="../assets/imgs/background.jpg">
+            </ion-avatar>
+            <h2>Stephanie</h2>
+            <h4>Today at 3:44 PM</h4>
+            <ion-buttons medium item-end>
+                <button ion-button medium clear item-end (click)="presentActionSheet()">
+                    <ion-icon class="icons" name="more" item-end>
+                    </ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <p padding>If you can't give it five minuites, don't give it five years.</p>
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear start>
+                        <ion-icon  name="heart-outline"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="send"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+        </ion-row>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="../assets/imgs/yinyang.jpg">
+            </ion-avatar>
+            <h2>Angela</h2>
+            <h4>Today at 3:04 AM</h4>
+            <ion-buttons medium item-end>
+                <button ion-button medium clear item-end (click)="presentActionSheet()">
+                    <ion-icon class="icons" name="more" item-end>
+                    </ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <p padding>Omw to see Tom ;-)</p>
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear start>
+                        <ion-icon class="icons" name="heart" color="danger"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="send"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+        </ion-row>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="../assets/imgs/background.jpg">
+            </ion-avatar>
+            <h2>Seyikemi</h2>
+            <h4>Today at 3:44 PM</h4>
+            <ion-buttons medium item-end>
+                <button ion-button medium clear item-end (click)="presentActionSheet()">
+                    <ion-icon class="icons" name="more" item-end>
+                    </ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <p padding>When life gives you lemons,sell those lemons and make some profit</p>
+        <ion-slides pager="true" parallax="true">
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/yinyang.jpg">
+            </ion-slide>
+            <ion-slide>
+                <img src="../assets/imgs/background.jpg">
+            </ion-slide>
+        </ion-slides>
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear start>
+                        <ion-icon name="heart-outline"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+            <ion-col>
+                <ion-buttons>
+                    <button ion-button clear>
+                        <ion-icon class="icons" name="send"></ion-icon>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+
+        </ion-row>
+
+    </ion-card>
+</ion-content>

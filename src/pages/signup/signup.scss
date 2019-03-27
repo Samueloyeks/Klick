@@ -1,0 +1,74 @@
+page-signup {
+  .toolbar-content{background: cornsilk !important;}
+  .toolbar-background{background: cornsilk !important;}
+ 
+  h2 {color: #FEA603;text-decoration-style: wavy;}
+
+    ion-header ion-icon.back-button-icon.icon {
+      color: #FEA603;
+  }
+    ion-content{color:white !important;} 
+     ion-item{background:white !important;}
+     
+     ion-input{color:blue !important;} 
+     .appname{
+      text-align: center !important;
+      .klick{
+       font-size: -webkit-xxx-large !important;
+       font-family: paytone one;
+
+     } 
+   }
+     .eye{color:#FEA603}
+    .auth-page {
+      ion-input{color:#FEA603 !important;}
+      ion-select{color:#FEA603 !important;}
+      ion-datetime{color:#FEA603 !important;}
+      ion-item{background-color: cornsilk !important;}
+      .invalid {
+        .item-inner {
+          border: 0;
+        }
+        ion-input {
+          border-bottom: 1px solid red;
+        }
+        background-color: cornsilk !important;
+      }
+    
+      .valid {
+        .item-inner {
+          border: 0;
+        }
+        ion-input {
+          border-bottom: 1px solid #FEA603;
+        }
+        background-color: cornsilk !important;
+      }
+    
+      .error-message {
+        min-height: 2.2rem;
+        p {
+          font-size: 80%;
+        }
+        ion-label {
+          margin: 4px 0;
+        }
+        .item-inner {
+          border-bottom: 0 !important;
+        }
+        background-color: cornsilk !important;
+        color:red;       
+      }
+          .buttons{
+            background-color: #FEA603 !important;
+            // color:black;
+          }
+          .signupInput{
+            background-color: cornsilk;
+          }
+          .terms{
+            button{color:#FEA603 !important;}
+          }        
+          background-color: cornsilk;
+        }
+}

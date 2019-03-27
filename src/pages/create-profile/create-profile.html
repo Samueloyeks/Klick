@@ -1,0 +1,168 @@
+
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Create profile</ion-title>
+      <ion-buttons end>
+        <button ion-button clear type="submit" form="infoForm" end>
+          Done
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+  
+   
+  <ion-content>
+    
+    <ion-item>
+      <ion-avatar item-start> 
+        <img *ngIf="!selectedPhoto" src="../assets/imgs/avatar-female.png" imageViewer>
+        <img *ngIf="selectedPhoto" [src]="selectedPhoto" imageViewer />
+      </ion-avatar>
+      <ion-buttons>
+        <button ion-button full medium clear (click)="uploadpic()">
+          Add profile picture
+        </button>
+        <button ion-button full medium clear (click)="getUrl()">
+          get url
+        </button>
+      </ion-buttons>
+      <span *ngIf="profilePicture">Picture taken!</span>
+    </ion-item>
+    <ion-item>
+      <p>Let's set up your account...</p>
+      <p> Please answer the following questions
+        <br>to help klick find the best matches for you</p>
+    </ion-item>
+  
+
+    <form  [formGroup]="infoForm" id="infoForm" (submit)="navigateToApp()" novalidate>
+    <ion-item>
+      <ion-label floating>What do you do in your free time?</ion-label>
+      <ion-select multiple="true" type="text" formControlName="freeTime">
+        <ion-option>Sports</ion-option>
+        <ion-option>Reading</ion-option>
+        <ion-option>Music</ion-option>
+        <ion-option>Art</ion-option>
+        <ion-option>Graphics</ion-option>
+        <ion-option>More</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>What kind of movies do you enjoy?</ion-label>
+      <ion-select multiple="true" type="text" formControlName="movies">
+        <ion-option>Action</ion-option>
+        <ion-option>Adventure</ion-option>
+        <ion-option>Romance</ion-option>
+        <ion-option>Fantasy</ion-option>
+        <ion-option>Comedy</ion-option>
+        <ion-option>Biography</ion-option>
+        <ion-option>Cartoons</ion-option>
+        <ion-option>Anime</ion-option>
+        <ion-option>Local</ion-option>
+        <ion-option>Classics</ion-option>
+        <ion-option>Others</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Looking for a serious relationship?</ion-label>
+      <ion-select type="text" formControlName="relationship">
+        <ion-option>Yes</ion-option>
+        <ion-option>No</ion-option>
+      </ion-select>
+    </ion-item>
+  
+  
+    <ion-item>
+      <ion-label floating>Your romantic life on a scale of 1-10</ion-label>
+      <ion-select type="text" formControlName="romance">
+        <ion-option>1</ion-option>
+        <ion-option>2</ion-option>
+        <ion-option>3</ion-option>
+        <ion-option>4</ion-option>
+        <ion-option>5</ion-option>
+        <ion-option>6</ion-option>
+        <ion-option>7</ion-option>
+        <ion-option>8</ion-option>
+        <ion-option>9</ion-option>
+        <ion-option>10</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Animals you like</ion-label>
+      <ion-select multiple="true" type="text" formControlName="animals">
+        <ion-option>Dogs</ion-option>
+        <ion-option>Cats</ion-option>
+        <ion-option>Birds</ion-option>
+        <ion-option>Monkeys</ion-option>
+        <ion-option>Mice</ion-option>
+        <ion-option>Fishes</ion-option>
+        <ion-option>Others</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Do you have a job?</ion-label>
+      <ion-select type="text" formControlName="job">
+        <ion-option>Yes</ion-option>
+        <ion-option>No</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Your free time on a scale of 1-10</ion-label>
+      <ion-select type="text" formControlName="flexibility">
+        <ion-option>1</ion-option>
+        <ion-option>2</ion-option>
+        <ion-option>3</ion-option>
+        <ion-option>4</ion-option>
+        <ion-option>5</ion-option>
+        <ion-option>6</ion-option>
+        <ion-option>7</ion-option>
+        <ion-option>8</ion-option>
+        <ion-option>9</ion-option>
+        <ion-option>10</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Would you like an open relationship?</ion-label>
+      <ion-select type="text" formControlName="open">
+        <ion-option>Yes</ion-option>
+        <ion-option>No</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Location</ion-label>
+      <ion-select type="text" formControlName="location">
+        <ion-option>Lagos</ion-option>
+        <ion-option>Abuja</ion-option>
+        <ion-option>Kano</ion-option>
+        <ion-option>Osun</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Describe yourself</ion-label>
+      <ion-select type="text" formControlName="description">
+        <ion-option>Melancholic</ion-option>
+        <ion-option>Outgoing</ion-option>
+        <ion-option>sanguine</ion-option>
+        <ion-option>introvert</ion-option>
+      </ion-select>
+    </ion-item>
+ 
+    <ion-item>
+  
+      <p>You can edit your answers or add more
+        <br>information in settings to get the
+        <br>most compatible matches</p>
+    </ion-item>
+  
+  </form>
+  </ion-content>

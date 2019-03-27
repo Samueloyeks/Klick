@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-navbar>   
+      <ion-title>Matchup</ion-title>
+     
+          <button ion-button clear menuToggle>
+              <ion-icon id="menu" name="menu"></ion-icon>
+              </button>
+
+          <ion-buttons end>
+            <button ion-button clear end>
+            <ion-icon id="create" name="create"></ion-icon>
+            </button>
+          </ion-buttons>
+    </ion-navbar>
+  </ion-header> 
+
+
+<ion-content padding>
+    <form [formGroup]="matchupForm" (submit)="navigateToMatchList($event,distance,ageRange,matchGender)" novalidate>
+              <ion-item>
+                <ion-label>Maximun distance:{{singleValue}}Km</ion-label>
+                <ion-range [(ngModel)]="singleValue" color="primary" pin="true" formControlName="distance">
+                        <ion-label range-left>0km</ion-label>
+                        <ion-label range-right>100km</ion-label>
+                </ion-range>            
+              </ion-item><br><br>  
+
+          
+                 <ion-item>
+                    <ion-label>Age range:{{knobValues.lower}} to {{knobValues.upper}} years</ion-label>
+                    <ion-range pin="true" dualKnobs="true" [(ngModel)]="knobValues" min="18" max="50" formControlName="ageRange">
+                            <ion-label range-left>18</ion-label>
+                            <ion-label range-right>50+</ion-label>
+                    </ion-range>
+                  </ion-item><br>
+                  <ion-item>
+                      <ion-label>Gender to match to:</ion-label>
+                      <ion-select   type="text" formControlName="matchGender">
+                          <ion-option>Male</ion-option>
+                          <ion-option>Female</ion-option>
+                          <ion-option>Both</ion-option>
+                          </ion-select>
+                    </ion-item><br>
+
+    <ion-row>
+        <ion-col>
+            <button ion-button color="blue" [disabled]="!matchupForm.valid" round full medium type="submit">Get matched</button>   
+        </ion-col>
+      </ion-row>
+
+</form>
+
+</ion-content>

@@ -1,0 +1,136 @@
+page-chatting {
+    $userBackgroundColor: #387ef5;
+    $toUserBackgroundColor: #fff;
+    #myInput {
+        width: calc(100% - 10px);
+        border: 0;
+        border-radius: 5px;
+        background: burlywood;
+        min-height: 28px !important;
+        max-height:90px;
+        padding-top:5px;
+    }
+    .toolbar{
+        padding-top:5px;
+    }
+    #uname{text-align: center !important;}
+    #camera::before{display: none !important;}
+    #camera2::before{display: none !important;}
+    #send::before{display: none !important;}
+    .label{margin:0px;}
+    .scroll-content{
+        background-color: #343434;
+    }
+    .item{
+        background-color: #343434;
+    }
+        .chat {
+            width: 320px;
+        }
+        .input-wrap {
+            padding: 5px;
+            display: flex;
+            textarea {
+              flex: 1;
+              border: 0;
+              border-style: solid;
+              width: 100%;
+              border-radius: 20px;
+            }  
+           
+          }
+     
+      
+        .time-me{
+            // color:black !important;
+            float:left;
+            font-size: 60%;
+        }
+        .time-you{
+            color:black !important;
+            float:right;
+            font-size: 60%;
+        }
+          .line-breaker {
+            white-space: pre-line;
+          }
+        .bubble{
+            background-color: #F2F2F2;
+            border-radius: 20px;
+            box-shadow: 0 0 6px #B2B2B2;
+            display: inline-block;
+            padding: 10px 18px;
+            position: relative;
+            vertical-align: top;
+
+
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            color: black;
+            width: auto;
+            max-width: 80%;
+            span.triangle {
+              background-color:transparent;
+              border-radius: 2px;
+              height: 8px;
+              width: 8px;
+              top: 12px;
+              display: block;
+              border-style: solid;
+              border-width: 1px;
+              -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+              position: absolute;
+            }
+        }
+        
+        .bubble::before {
+            background-color: transparent;
+            content: "\00a0";
+            display: block;
+            height: 16px;
+            position: absolute;
+            top: 11px;
+            transform:             rotate( 29deg ) skew( -35deg );
+                -moz-transform:    rotate( 29deg ) skew( -35deg );
+                -ms-transform:     rotate( 29deg ) skew( -35deg );
+                -o-transform:      rotate( 29deg ) skew( -35deg );
+                -webkit-transform: rotate( 29deg ) skew( -35deg );
+            width:  20px;
+
+        }
+        
+        .me {
+            float: left;   
+            margin: 5px 45px 5px 20px; 
+           
+        }
+        
+        .me::before {
+            box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+            left: -9px;     
+            background-color: #F2F2F2;
+        }
+        
+        .you {
+            float: right;    
+            margin: 5px 20px 5px 45px;  
+            background-color: #387ef5;      
+            color:white;
+            
+        }
+        
+        .you::before {
+            box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
+            right: -9px;  
+            background-color: #387ef5 !important;  
+          
+        }
+        // .input-wrapper{max-height: 70px !important;}
+        
+        // .chatWindow {
+        //     // padding-bottom: 70px;
+        // }
+        
+       
+}

@@ -1,0 +1,29 @@
+
+<ion-header no-border>
+   
+        <ion-navbar>
+            <ion-title>{{ pages[selectedTab].title }}</ion-title>
+            
+                <button ion-button clear menuToggle>
+                    <ion-icon id="menu" name="menu"></ion-icon>
+                    </button>
+                  
+       
+                <ion-buttons end>
+                  <button ion-button clear end>
+                  <ion-icon id="create" name="create"></ion-icon>
+                  </button>
+                </ion-buttons>
+        </ion-navbar>
+
+
+</ion-header>
+
+
+<ion-content #myContent>
+    <super-tabs [config]="{ sideMenu: 'left' }" tabsPlacement="top"  toolbarColor="primary" toolbarBackground="light" indicatorColor="primary" 
+    (tabSelect)="onTabSelect($event)">
+    <super-tab *ngFor="let page of pages" [root]="page.pageName" [icon]="page.icon" [id]="page.id"></super-tab>
+  </super-tabs>
+</ion-content>
+

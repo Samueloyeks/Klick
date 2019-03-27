@@ -1,0 +1,42 @@
+page-chats {
+    ion-title{background:white !important;}
+    ion-content{color:white !important;}
+    #lastMessage{
+        padding-right: 20px;
+    }
+ .time{
+     h3{display: inline;}
+     p{float: right}
+ }
+
+ .searchbar {
+     /* padding: 0 8px; */
+     min-height: 24px;
+     border-left: 0px solid rgba(0, 0, 0, 0.05);
+     border-top: 0px solid rgba(0, 0, 0, 0.05);
+     border-right: 0px solid rgba(0, 0, 0, 0.05);
+     border-radius: 10px;
+    //  border-bottom: 0px solid rgba(0, 0, 0, 0.05);
+     background: rgba(0, 0, 0, 0.05);
+}
+.searchbar .searchbar-input {
+    padding: 0 28px;
+    border-radius: 5px;
+    height: 3rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    box-shadow: none;
+    color: #000;
+    /* background-color: #8BC34A; */
+    background-color: rgba(0, 0, 0, 0);
+}
+.searchbar-search-icon {
+    // display: none !important;
+    left: 7px !important;
+    top: 7px !important;
+    }
+.list-header{
+    padding-left: 16px;
+    padding-right: 16px;
+}
+}
