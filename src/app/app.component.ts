@@ -18,7 +18,7 @@ import { TempFriendsListPage } from '../pages/temp-friends-list/temp-friends-lis
 import { FriendsListPage } from '../pages/friends-list/friends-list';
 import { MenuPage } from '../pages/menu/menu';
 import { TempFriendsList2Page } from '../pages/temp-friends-list2/temp-friends-list2';
-
+import { Events } from 'ionic-angular'
 
 
 
@@ -44,12 +44,12 @@ export class MyApp {
 
   constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController,
     public FirebaseService: FirebaseServiceProvider,
-    public toastCtrl: ToastController, splashScreen: SplashScreen, public storage: Storage,
+    public toastCtrl: ToastController, splashScreen: SplashScreen, public storage: Storage,public events:Events,
     public loadingCtrl: LoadingController, public profileService: ProfileServiceProvider,public statusBar:StatusBar) {
 
     this.initializeApp();
   
-   
+  
   }
 
 
@@ -96,6 +96,10 @@ export class MyApp {
         }
       });
     });
+
+    this.events.subscribe('username', (username) => {
+      this.username = username;
+    })
   }
   presentActionSheet() {
         const actionSheet = this.actionSheetCtrl.create({

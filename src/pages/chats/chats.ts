@@ -30,7 +30,9 @@ export class ChatsPage {
   messages;
   lastMessage;
   msgs = [];
-  searchbox
+  searchbox;
+
+  
   public personalMessages = firebase.database().ref(`/matchChats/${firebase.auth().currentUser.uid}`);
   section: string = 'two';
   somethings: any = new Array(20);
@@ -38,7 +40,8 @@ export class ChatsPage {
   constructor(public zone: NgZone, public app: App, public chatService: ChatProvider,
     public menuCtrl: MenuController, public RequestService: RequestServiceProvider,
     public events: Events, public navCtrl: NavController, public navParams: NavParams) {
-
+      this.RequestService.getMyRequests();
+    this.RequestService.getAcceptResponse();
   
   }
   getLastMessage(){
@@ -83,9 +86,11 @@ export class ChatsPage {
   
 
     })
-
-
   }
+
+
+
+
   objectToArray(obj: Object) : Array<any> {
     if( obj==null){
       return null;

@@ -3,6 +3,7 @@ import { ActionSheetController } from 'ionic-angular';
 import { IonicPage, NavController, NavParams, Events, AlertController } from 'ionic-angular';
 import { RequestServiceProvider } from '../../providers/request-service/request-service';
 import * as firebase from 'firebase';
+import { TabsPage } from '../tabs/tabs';
 
 
 /**
@@ -16,15 +17,40 @@ import * as firebase from 'firebase';
 @Component({
   selector: 'page-notifications',
   templateUrl: 'notifications.html',
-}) 
+})
 export class NotificationsPage {
   public personalReq = firebase.database().ref(`/requests/${firebase.auth().currentUser.uid}`);
   public personalAccepts = firebase.database().ref(`/acceptedTemp/${firebase.auth().currentUser.uid}`);
   notifications = "All";
   myRequests;
   myAccepts;
+  requestDates;
+  acceptDates;
+
+  // doRefresh(refresher) {
+  //   this.RequestService.getMyRequests();
+  //     this.RequestService.getAcceptResponse();
+  //   console.log('Begin async operation', refresher);
+
+  //   setTimeout(() => {
+  //     console.log('Async operation has ended');
+  //     refresher.complete();
+  //   }, 2000);
+  // }
+
+  constructor(public alertCtrl: AlertController, public RequestService: RequestServiceProvider, public events: Events,
+    public navCtrl: NavController, public actionSheetCtrl: ActionSheetController, public navParams: NavParams) {
+    this.RequestService.getMyRequests();
+    this.RequestService.getAcceptResponse();
+  }
 
   doRefresh(refresher) {
+    this.RequestService.getMyRequests();
+    this.RequestService.getAcceptResponse();
+
+    this.myRequests = this.RequestService.requesterDetails;
+    this.myAccepts = this.RequestService.accepterDetails;
+
     console.log('Begin async operation', refresher);
 
     setTimeout(() => {
@@ -33,49 +59,31 @@ export class NotificationsPage {
     }, 2000);
   }
 
-  presentActionSheet() {
-    const actionSheet = this.actionSheetCtrl.create({
-      // title: 'Are you sure you want to Log out?',
-      buttons: [
-        { text: 'Hide notification' },
-
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ] 
-    });
-    actionSheet.present();
-  }
-
-  constructor(public alertCtrl: AlertController, public RequestService: RequestServiceProvider, public events: Events, public navCtrl: NavController, public actionSheetCtrl: ActionSheetController, public navParams: NavParams) {
-  
-  }
-
   ionViewWillEnter() {
     this.RequestService.getMyRequests();
     this.RequestService.getAcceptResponse();
     this.events.subscribe('gotRequests', (bv) => {
       this.myRequests = [];
-      
-      // this.myRequests = bv
-      // console.log(this.myRequests);
-      this.myRequests = this.RequestService.userDetails;
-      // console.log(this.myRequests)
+      this.requestDates=[];
+      this.myRequests = this.RequestService.requesterDetails;
+      this.requestDates = this.RequestService.reqDates;
+      console.log(this.myRequests)
+      console.log(this.requestDates)
     })
     this.events.subscribe('gotAccepts', () => {
       this.myAccepts = [];
-      this.myAccepts = this.RequestService.userDetails;
+      this.acceptDates=[];
+      this.myAccepts = this.RequestService.accepterDetails;
+      this.acceptDates = this.RequestService.acceptDates;
+      console.log(this.acceptDates)
+
     })
   }
 
   ionViewDidLeave() {
-    this.events.unsubscribe('gotRequests');
-    this.events.unsubscribe('gotAccepts');
-this.clearBadge();
+    this.clearBadge();
+    this.RequestService.getMyRequests();
+    this.RequestService.getAcceptResponse();
   }
 
   getMyRequests() {
@@ -92,7 +100,6 @@ this.clearBadge();
       buttons: ['Ok']
     });
     this.RequestService.acceptRequest(item).then(() => {
-
     })
     alert.present();
   }
@@ -107,12 +114,12 @@ this.clearBadge();
     })
     alert.present();
   }
+
   remove(item) {
     this.RequestService.removeAccept(item);
   }
 
   clearBadge() {
-
     this.personalReq.orderByChild('uid').on('value', function (snapshot) {
       snapshot.forEach(function (userSnapshot) {
         let key = userSnapshot.key;
@@ -128,6 +135,31 @@ this.clearBadge();
         data.update({ isSeen: 0 })
       })
     })
+    this.RequestService.getMyRequests();
+    this.RequestService.getAcceptResponse();
   }
+
+  presentAlert(item) {
+    let alert = this.alertCtrl.create({
+      title: item.username + ' sent you a request',
+      message: 'Accept request to receive messages from ' + item.username,
+      buttons: [
+        {
+          text: 'Accept',
+          handler: () => {
+            this.accept(item)
+          }
+        },
+        {
+          text: 'Decline',
+          handler: () => {
+            this.ignore(item)
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 
 }

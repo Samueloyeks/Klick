@@ -18,6 +18,8 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Crop } from '@ionic-native/crop';
 import { File } from '@ionic-native/file';
 import { FilePath } from "@ionic-native/file-path";
+import {TimeAgoPipe} from 'time-ago-pipe';
+
 
 
 import { MyApp } from './app.component';
@@ -97,6 +99,7 @@ firebase.initializeApp(config);
     UpdateStatusPage,
     FriendProfilePage,
     TempFriendsList2Page,
+    TimeAgoPipe,
     // ChatsPage,
     // AutoresizeDirective,
 

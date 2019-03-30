@@ -22,20 +22,22 @@
           <img src="../assets/imgs/background.jpg">
         </ion-avatar> -->
         <div class="bubble me" *ngIf="item.sentBy === match.uid">
-
           <h3 class="line-breaker ">{{item.message}}</h3>
           <p class="time-me">{{item.time}}</p>
           <!-- <img src="{{item.message}}" *ngIf="imgornot[i]"> -->
         </div>
+        
+        
         <!-- <ion-avatar item-right *ngIf="item.sentBy != match.uid">
           <img src="../assets/imgs/yinyang.jpg">
         </ion-avatar> -->
         <div class="bubble you" *ngIf="item.sentBy != match.uid">
-
           <h3 class="line-breaker ">{{item.message}}</h3>
           <p class="time-you">{{item.time}}</p>
           <!-- <img src="{{item.message}}" *ngIf="imgornot[i]"> -->
         </div>
+        <div class="seen" *ngIf="item.isSeen == 0 && item.sentBy != match.uid">Seen</div>
+       
       </ion-item>
     </ion-list>
 

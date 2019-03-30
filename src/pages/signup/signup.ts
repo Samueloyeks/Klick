@@ -84,8 +84,9 @@ export class SignupPage {
       age: this.getAge(this.signupForm.value.dob).toString(),
       status: "Hey there, I'm new on klick",
       lat:this.locationTracker.lat,
-      long:this.locationTracker.lng,
+      lng:this.locationTracker.lng,
     };
+    console.log(account)
 
     if (!this.signupForm.valid) {
       console.log(

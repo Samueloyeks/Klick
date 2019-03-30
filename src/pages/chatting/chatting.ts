@@ -35,7 +35,7 @@ export class ChattingPage {
       console.log(this.allMessages[this.allMessages.length - 1])
     })
   }
-
+ 
   onFocus() {
     this.content.resize();
     this.content.scrollToBottom();
@@ -52,6 +52,7 @@ export class ChattingPage {
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false, 'myMenu');
+    
   }
   ionViewDidLeave() {
     this.menuCtrl.enable(true, 'myMenu');
@@ -108,6 +109,7 @@ export class ChattingPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChattingPage');
+    this.chatService.markAsSeen();
   }
 
   navigateToFriendProfile() {

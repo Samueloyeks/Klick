@@ -1,0 +1,93 @@
+// body {
+// 	font: 500 .8em/1 "Proxima Nova", sans-serif;
+// }
+
+// html {
+// 	box-sizing: border-box;
+//   display: flex;
+//   justify-content: center;
+// }
+
+// * {
+// 	box-sizing: inherit;
+// 	margin: 0;
+// 	padding: 0;
+// }
+
+// body {
+//   height: 100vh;
+//   width: 90%;
+//   max-width: 40rem;
+// 	display: flex;
+// 	align-items: flex-end;
+// 	justify-content: center;
+// 	border-radius: 2rem;
+// 	border: 1rem solid #ddd;
+// 	overflow: hidden;
+// }
+
+// nav { display: flex; }
+
+// nav {
+// 	width: 100%;
+// 	overflow: hidden;
+// 	border-radius: 0 0 1rem 1rem;
+// }
+
+// a {
+// 	position: relative;
+// 	display: flex;
+// 	flex-direction: column;
+// 	align-items: center;
+// 	flex: 1;
+// 	text-decoration: none;
+// 	color: white;
+// 	padding: 1rem;
+// 	transition: flex 600ms cubic-bezier(.25, .75, .25, 1), z-index 600ms cubic-bezier(.25, .75, .25, 1);
+	
+// 	@mixin setColorAndIndex($color, $index) {
+// 		&:nth-child(#{$index}) {
+// 			z-index: $index;
+
+// 			&::after { background-color: $color; }
+// 		}
+// 	}
+	
+// 	@include setColorAndIndex(#EF5558, 1);
+// 	@include setColorAndIndex(#F9C354, 2);
+// 	@include setColorAndIndex(#4A99A3, 3);
+// 	@include setColorAndIndex(#14243E, 4);
+	
+// 	&:last-child { background-color: #14243E; }
+
+// 	&::after {
+// 		content: "";
+// 		position: absolute;
+// 		top: 0;
+// 		left: 0;
+// 		width: 100%;
+// 		height: 100%;
+// 		z-index: -1;
+//     transform-origin: top;
+//     transform: skewX(-20deg);
+// 		box-shadow: -1rem 0 1rem rgba(black, .1);
+// 	}
+	
+// 	&:target {
+// 		flex: 3;
+// 		z-index: 10;
+// 	}
+	
+// 	&:not(:target) {
+// 		color: rgba(white, .5);
+// 	}
+	
+// 	svg {
+// 		width: 2rem;
+// 		height: 2rem;
+// 	}
+	
+// 	span {
+// 		margin-top: 0.4rem;
+// 	}
+// }

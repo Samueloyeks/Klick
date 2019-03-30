@@ -6,7 +6,7 @@ import { Events } from 'ionic-angular';
 @Injectable()
 export class ChatProvider {
   matchChats = firebase.database().ref('/matchChats')
-  match: any 
+  match: any
   matchMessages = [];
   messages = [];
   constructor(public events: Events) {
@@ -26,13 +26,15 @@ export class ChatProvider {
           sentBy: firebase.auth().currentUser.uid,
           message: msg,
           timeStamp: firebase.database.ServerValue.TIMESTAMP,
-          time: time
+          time: time,
+          isSeen: 1,
         }).then(() => {
           this.matchChats.child(this.match.uid).child(firebase.auth().currentUser.uid).push({
             sentBy: firebase.auth().currentUser.uid,
             message: msg,
             timeStamp: firebase.database.ServerValue.TIMESTAMP,
-            time: time
+            time: time,
+            isSeen:1,
           }).then(() => {
             resolve(true);
           })
@@ -65,12 +67,23 @@ export class ChatProvider {
       for (var tempkey in temp) {
         this.messages.push(temp[tempkey]);
         console.log(this.messages)
-      } 
+      }
       this.events.publish('messages');
     }
     )
     return this.messages;
   }
- 
+
+
+  markAsSeen(){
+    let match = this.match.uid
+    this.matchChats.child(match).child(firebase.auth().currentUser.uid).orderByChild('uid').once('value', function (snapshot) {
+      snapshot.forEach(function (chatSnapshot) {
+        let key = chatSnapshot.key;
+        let data = firebase.database().ref(`/matchChats/${match}/${firebase.auth().currentUser.uid}/${key}`);
+        data.update({ isSeen: 0 })
+      });
+    })
+  }
 
 }

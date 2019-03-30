@@ -36,37 +36,26 @@
   <div [ngSwitch]="notifications">
     <ion-list *ngSwitchCase="'All'">
 
-        <ion-item-sliding *ngFor="let item of myRequests">
-            <ion-item (click)="presentActionSheet()">
+          <ion-item *ngFor="let item of myRequests;let i=index" (click)="presentAlert(item)">
               <ion-avatar item-start>
-                <img src="../assets/imgs/background.jpg">
-              </ion-avatar>
-              <h2>{{item.username}} sent you a request</h2>
-            </ion-item>
-  
-            <ion-item-options side="left">
-              <button ion-button color="secondary" (click)="accept(item)">
-                <ion-icon name="check-mark"></ion-icon>
-                Yeah
-              </button>           
-            </ion-item-options>
-  
-            <ion-item-options side="right">
-              <button ion-button color="danger" (click)="ignore(item)">
-                <ion-icon name="trash"></ion-icon>
-                Nope
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
+                  <img src="../assets/imgs/background.jpg">
+                </ion-avatar>
+                <h2>{{item.username}} sent you a request</h2>
+                <div>
+                <p style="display:inline-block">{{item.age}} years old</p> 
+                <p style="font-size: small;display:inline-block;float:right" item-right> {{requestDates[i].reqDate | timeAgo}}</p><p style="float:right;font-size: larger"> . </p>
+                </div>
+          </ion-item>
 
 
 
-          <ion-item-sliding *ngFor="let item of myAccepts">
+          <ion-item-sliding *ngFor="let item of myAccepts;let i=index">
             <ion-item (click)="presentActionSheet()">
               <ion-avatar item-start>
                 <img src="../assets/imgs/background.jpg">
               </ion-avatar>
               <h2>{{item.username}} accepted your request</h2>
+              <p style="font-size: small;display:inline-block;float:right" item-right> {{acceptDates[i].acceptDate | timeAgo}}</p><p style="float:right;font-size: larger"> . </p>
             </ion-item>
   
   
@@ -81,7 +70,7 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'Tagged'">
-        <ion-item-sliding *ngFor="let item of myRequests">
+        <!-- <ion-item-sliding *ngFor="let item of myRequests">
             <ion-item (click)="presentActionSheet()">
               <ion-avatar item-start>
                 <img src="../assets/imgs/background.jpg">
@@ -102,7 +91,7 @@
                 Nope
               </button>
             </ion-item-options>
-          </ion-item-sliding>
+          </ion-item-sliding> -->
     </ion-list>
 
   </div>

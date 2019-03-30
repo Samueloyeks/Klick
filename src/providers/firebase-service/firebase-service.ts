@@ -8,7 +8,7 @@ import { Http } from '../../../node_modules/@angular/http';
 export class FirebaseServiceProvider {
   public data: any;
   public fireAuth: any;
-  public userProfile: any; 
+  public userProfile: any;
   public matches: any = [];
 
   constructor(private http: Http) {
@@ -27,7 +27,7 @@ export class FirebaseServiceProvider {
     return firebase.auth().signOut();
   }
 
- 
+
   resetPassword(email: string): Promise<void> {
     return firebase.auth().sendPasswordResetEmail(email);
   }
@@ -47,7 +47,7 @@ export class FirebaseServiceProvider {
         });
     }
   }
- 
+
 
   getAllMatches(distance, ageRange, matchGender) {
     console.log(matchGender)
@@ -55,19 +55,36 @@ export class FirebaseServiceProvider {
       firebase.database().ref('/userProfile').orderByChild('uid').once('value', (snapshot) => {
         let temparr = [];
         snapshot.forEach(snap => {
-          if (snap.val().gender === matchGender && snap.val().age>=ageRange.lower&&snap.val().age<=ageRange.upper) {
-            temparr.push({
-              uid: snap.key,
-              dob: snap.val().dob,
-              email: snap.val().email,
-              fullName: snap.val().fullName,
-              gender: snap.val().gender,
-              username: snap.val().username,
-              age:snap.val().age
+          firebase.database().ref(`/matches/${firebase.auth().currentUser.uid}`).once('value',snapshot=>{
+          if(snapshot.val()){
+            snapshot.forEach(function(sender){
+              if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid &&snap.key!==sender.val().uid) {
+                temparr.push({
+                  uid: snap.key,
+                  dob: snap.val().dob,
+                  email: snap.val().email,
+                  fullName: snap.val().fullName,
+                  gender: snap.val().gender,
+                  username: snap.val().username,
+                  age: snap.val().age
+                })
+              }
+              if (matchGender == "Both") {
+                if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid &&snap.key!==sender.val().uid ) {
+                  temparr.push({
+                    uid: snap.key,
+                    dob: snap.val().dob,
+                    email: snap.val().email,
+                    fullName: snap.val().fullName,
+                    gender: snap.val().gender,
+                    username: snap.val().username,
+                    age: snap.val().age
+                  })
+                }
+              }
             })
-          }
-          if(matchGender=="Both"){
-            if ((snap.val().gender =="Male"||snap.val().gender =="Female") && snap.val().age>=ageRange.lower&&snap.val().age<=ageRange.upper) {
+          }else{
+            if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid) {
               temparr.push({
                 uid: snap.key,
                 dob: snap.val().dob,
@@ -75,10 +92,24 @@ export class FirebaseServiceProvider {
                 fullName: snap.val().fullName,
                 gender: snap.val().gender,
                 username: snap.val().username,
-                age:snap.val().age
+                age: snap.val().age
               })
             }
+            if (matchGender == "Both") {
+              if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid) {
+                temparr.push({
+                  uid: snap.key,
+                  dob: snap.val().dob,
+                  email: snap.val().email,
+                  fullName: snap.val().fullName,
+                  gender: snap.val().gender,
+                  username: snap.val().username,
+                  age: snap.val().age
+                })
+              }
+            }
           }
+          })
         });
         resolve(temparr);
       }).catch(err => {
@@ -87,6 +118,7 @@ export class FirebaseServiceProvider {
     })
     return promise;
   }
+
   getMatches() {
     var promise = new Promise((resolve, reject) => {
       firebase.database().ref('/userProfile').orderByChild('uid').once('value', (snapshot) => {
@@ -98,7 +130,8 @@ export class FirebaseServiceProvider {
             email: snap.val().email,
             fullName: snap.val().fullName,
             gender: snap.val().gender,
-            username: snap.val().username
+            username: snap.val().username,
+            age:snap.val().age,
           })
         });
         resolve(temparr);

@@ -8,6 +8,7 @@ import { LoginPage } from '../login/login';
 import { FirebaseServiceProvider } from '../../providers/firebase-service/firebase-service';
 import { ProfileServiceProvider } from '../../providers/profile-service/profile-service';
 import * as firebase from 'firebase';
+import { Events } from 'ionic-angular'
 
 
 @IonicPage()
@@ -19,10 +20,11 @@ export class MenuPage {
   rootPage: any = TabsPage;
   public userProfile: firebase.database.Reference;
   storageRef:firebase.storage.Reference;
+  public username: firebase.database.Reference;
 
 
   constructor(public profileService: ProfileServiceProvider, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController,
-    public navParams: NavParams, public loadingCtrl: LoadingController, public FirebaseService: FirebaseServiceProvider) {
+    public navParams: NavParams, public loadingCtrl: LoadingController, public FirebaseService: FirebaseServiceProvider,public events:Events) {
      
      
   }
@@ -30,7 +32,9 @@ export class MenuPage {
   ngOnInit() {
     this.profileService.getUserProfile().on('value', userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.val();
-      console.log(this.userProfile);
+      this.username = userProfileSnapshot.val().username;
+
+      this.events.publish('username', this.username);
     });
   }
 

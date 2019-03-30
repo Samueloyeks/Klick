@@ -11,9 +11,8 @@
 <ion-content >
 
 <ion-searchbar [(ngModel)]="searchString"  placeholder="search"></ion-searchbar>
-<p padding>Swipe right to send a request and left to discard</p>
 <ion-list no-lines>
-  <ion-item-sliding  *ngFor="let key of filteredMatches | filterBy: ['username']: searchString">
+  <!-- <ion-item-sliding  *ngFor="let key of filteredMatches | filterBy: ['username']: searchString">
     <ion-item> 
       <ion-avatar item-start >
         <img src="../assets/imgs/avatar-female.png">
@@ -37,7 +36,17 @@
         Yeah
       </button>
     </ion-item-options>
-  </ion-item-sliding>
+  </ion-item-sliding> -->
+
+  <ion-item  *ngFor="let key of filteredMatches | filterBy: ['username']: searchString"> 
+    <ion-avatar item-start >
+      <img src="../assets/imgs/avatar-female.png">
+  </ion-avatar>
+  <h2>{{key.username}}</h2>
+  <p style="display:inline-block">{{key.age}} years old</p>  
+  <img src="../../assets/imgs/add.png" (click)="sendreq(key)" style="display:inline-block;float:right !important;width:20px"/>
+  </ion-item>
+
   <!-- <ion-item *ngIf="filteredMatches.length == 0">
     <h2>Sorry we couldn't find any matches</h2>
   </ion-item> -->

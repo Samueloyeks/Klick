@@ -60,7 +60,19 @@ export class MatchListPage {
       let successAlert = this.alertCtrl.create({
         title: 'Request sent!',
         subTitle: 'Your request was sent to ' + recipient.username,
-        buttons: ['Ok']
+        buttons: ['Ok'] 
+      });
+
+      let failureAlert = this.alertCtrl.create({
+        title: 'Request already sent',
+        subTitle: 'Awaiting response from ' + recipient.username,
+        buttons: ['Ok'] 
+      });
+
+      let doneAlert = this.alertCtrl.create({
+        title: 'Already friends',
+        subTitle: 'You are already friends with ' + recipient.username,
+        buttons: ['Ok'] 
       });
 
       this.RequestService.sendRequest(this.newRequest).then((res: any) => {
@@ -68,12 +80,15 @@ export class MatchListPage {
           successAlert.present();
           let sentUser = this.filteredMatches.indexOf(recipient);
           this.filteredMatches.splice(sentUser, 1);
+        }else if(res.failure){
+          failureAlert.present()
+        }else if(res.done){
+          doneAlert.present()
         }
       }).catch((err) => {
         alert(err);
       })
     }
-    console.log(recipient);
   }
 
 //   var myMarker = null;

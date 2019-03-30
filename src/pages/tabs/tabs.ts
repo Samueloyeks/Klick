@@ -19,10 +19,10 @@ const { Camera } = Plugins;
 @Component({
   selector: 'page-tabs',
   templateUrl: 'tabs.html',
-  providers: [Badge,FirebaseServiceProvider,ProfileServiceProvider]
+  providers: [Badge, FirebaseServiceProvider, ProfileServiceProvider]
 })
 export class TabsPage {
-  public picture: string=null;
+  public picture: string = null;
   chatHomePage = ChatHomePage;
   matchupPage = MatchupPage;
   uploadPage = UploadPage;
@@ -33,82 +33,80 @@ export class TabsPage {
   myAccepts;
   requests = [];
   accepts;
+  reqSum = 0;
+  acceptSum = 0;
   public personalReq = firebase.database().ref(`/requests/${firebase.auth().currentUser.uid}`);
   public personalAccepts = firebase.database().ref(`/acceptedTemp/${firebase.auth().currentUser.uid}`);
 
-  constructor(public ProfileService: ProfileServiceProvider,private badge: Badge, public menuCtrl: MenuController, public events: Events,
+  constructor(public ProfileService: ProfileServiceProvider, private badge: Badge, public menuCtrl: MenuController, public events: Events,
     public detectorRef: ChangeDetectorRef, public RequestService: RequestServiceProvider,
     public FirebaseService: FirebaseServiceProvider) {
     this.RequestService.getMyRequests();
     this.RequestService.getAcceptResponse();
+
   }
 
-  ionViewWillEnter() {
+  ionViewWillLoad(){
+    this.RequestService.getMyRequests();
+    this.RequestService.getAcceptResponse();
     this.menuCtrl.enable(true, 'myMenu');
-    var sum1;
-    var sum2;
+    //subscribe to event to get array of objects of isSeen values
     this.events.subscribe('gotRequests', (bv) => {
-      this.requests = bv;
-      var initialValue = 0;
-      sum1 = this.requests.reduce(function (accumulator, currentValue) {
-        return accumulator + currentValue.req_isSee
-      }, initialValue)
-      this.badgeValue=sum1+sum2;
-    })
-    this.events.subscribe('gotAccepts', (bv) => {
-      this.accepts = bv;
-      var initialValue = 0;
-      sum2 = this.accepts.reduce(function (accumulator, currentValue) {
-        return accumulator + currentValue.accept_isSeen;
-      }, initialValue)
-      this.badgeValue=sum2+sum1;
-    })
-
-  }
-
-  clearBadge() {
-
-    this.personalReq.orderByChild('uid').on('value', function (snapshot) {
-      snapshot.forEach(function (userSnapshot) {
-        let key = userSnapshot.key;
-        let data = firebase.database().ref(`/requests/${firebase.auth().currentUser.uid}/${key}`);
-        data.update({ isSeen: 0 })
+      if(bv!==null){
+      var reqArr = bv.map(function (obj) {
+        return obj.req_isSeen;
       });
+      //convert array of objects to array 
+      if (reqArr.length >= 1) {
+        this.reqSum = reqArr.reduce(add)
+      }
+      //update badge value with sum of requests and accepts
+      this.badgeValue = this.reqSum + this.acceptSum;
+      }else{
+        this.reqSum = 0;
+        this.badgeValue = this.reqSum + this.acceptSum;
+      }
     })
 
-    this.personalAccepts.orderByChild('uid').on('value', function (snapshot) {
-      snapshot.forEach(function (userSnapshot) {
-        let key = userSnapshot.key;
-        let data = firebase.database().ref(`/acceptedTemp/${firebase.auth().currentUser.uid}/${key}`);
-        data.update({ isSeen: 0 })
-      })
+    this.events.subscribe('gotAccepts', (bv) => {
+     if(bv!==null){
+      var acceptArr = bv.map(function (obj) {
+        return obj.accept_isSeen;
+      });
+      //convert array of objects to array 
+      if (acceptArr.length >= 1) {
+        this.acceptSum = acceptArr.reduce(add)
+      }
+      this.badgeValue = this.acceptSum + this.reqSum;
+     }else{
+      this.acceptSum = 0;
+      this.badgeValue = this.reqSum + this.acceptSum;
+     }
     })
+
+    function add(accumulator, a) {
+      return accumulator + a;
+    }
   }
 
-  ionViewChildDidLeave() {
-    this.clearBadge();
-    this.events.unsubscribe('gotRequests');
-    this.events.unsubscribe('gotRequests')
-  this.badgeValue=0;
-  }
 
-  async uploadPicture():Promise<void>{
+  async uploadPicture(): Promise<void> {
     try {
       const picture = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Base64,
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.Base64,
       });
       this.picture = picture.base64Data.slice(23);
-      this.ProfileService.addPic(this.picture).then(()=>{
+      this.ProfileService.addPic(this.picture).then(() => {
         this.picture = null;
-    });
- 
-      } catch (error) {
+      });
+
+    } catch (error) {
       console.error(error);
-      }
-      // return this.profilePicture;
-     
+    }
+    // return this.profilePicture;
+
   }
- 
+
 }
