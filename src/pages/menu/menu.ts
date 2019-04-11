@@ -34,7 +34,6 @@ export class MenuPage {
       this.userProfile = userProfileSnapshot.val();
       this.username = userProfileSnapshot.val().username;
 
-      this.events.publish('username', this.username);
     });
   }
 
@@ -71,8 +70,14 @@ export class MenuPage {
     });
     actionSheet.present();
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
+    this.profileService.getUserProfile().on('value', userProfileSnapshot => {
+      this.username = userProfileSnapshot.val().username;
+      console.log(this.username)
+      this.events.publish('username', this.username);
+    });
   }
 
 }

@@ -1,4 +1,5 @@
 page-chats {
+    ion-icon:before{display: none}
     ion-title{background:white !important;}
     ion-content{color:white !important;}
     #lastMessage{
@@ -38,5 +39,9 @@ page-chats {
 .list-header{
     padding-left: 16px;
     padding-right: 16px;
+}
+.msgIcon svg{
+    vertical-align: bottom;
+    height: 20px;
 }
 }

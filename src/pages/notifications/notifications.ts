@@ -62,6 +62,8 @@ export class NotificationsPage {
   ionViewWillEnter() {
     this.RequestService.getMyRequests();
     this.RequestService.getAcceptResponse();
+    this.myRequests=[]
+    this.requestDates=[];
     this.events.subscribe('gotRequests', (bv) => {
       this.myRequests = [];
       this.requestDates=[];

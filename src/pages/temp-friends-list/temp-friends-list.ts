@@ -37,6 +37,9 @@ export class TempFriendsListPage {
     this.events.subscribe('requestReceivers',()=>{
       this.requestReceivers = [];
       this.requestReceivers=this.RequestService.requestReceivers;
+      if(this.RequestService.requestReceivers.length>0){
+        this.requestReceivers=this.RequestService.requestReceivers;
+      }
       console.log(this.RequestService.requestReceivers)
     })
 
@@ -44,7 +47,9 @@ export class TempFriendsListPage {
     this.requestSenders = [];
     this.events.subscribe('requestSenders',()=>{
       this.requestSenders = [];
-      this.requestSenders=this.RequestService.requestSenders;
+      if(this.RequestService.requestSenders>0){
+        this.requestSenders=this.RequestService.requestSenders;
+      }
       console.log(this.RequestService.requestSenders)
     })
 
@@ -52,7 +57,9 @@ export class TempFriendsListPage {
     this.myTempFriends = [];
     this.events.subscribe('tempFriends',()=>{
       this.myTempFriends = [];
-      this.myTempFriends=this.RequestService.myTempFriends;
+      if(this.RequestService.myTempFriends){
+        this.myTempFriends=this.RequestService.myTempFriends;
+      }
       console.log(this.RequestService.myTempFriends)
     })
   } 

@@ -35,11 +35,12 @@ export class TabsPage {
   accepts;
   reqSum = 0;
   acceptSum = 0;
+  username;
   public personalReq = firebase.database().ref(`/requests/${firebase.auth().currentUser.uid}`);
   public personalAccepts = firebase.database().ref(`/acceptedTemp/${firebase.auth().currentUser.uid}`);
 
   constructor(public ProfileService: ProfileServiceProvider, private badge: Badge, public menuCtrl: MenuController, public events: Events,
-    public detectorRef: ChangeDetectorRef, public RequestService: RequestServiceProvider,
+    public detectorRef: ChangeDetectorRef,public profileService: ProfileServiceProvider, public RequestService: RequestServiceProvider,
     public FirebaseService: FirebaseServiceProvider) {
     this.RequestService.getMyRequests();
     this.RequestService.getAcceptResponse();
@@ -89,6 +90,13 @@ export class TabsPage {
     }
   }
 
+  ionViewDidLoad() {
+    this.profileService.getUserProfile().on('value', userProfileSnapshot => {
+      this.username = userProfileSnapshot.val().username;
+      console.log(this.username)
+      this.events.publish('username', this.username);
+    });
+  }
 
   async uploadPicture(): Promise<void> {
     try {

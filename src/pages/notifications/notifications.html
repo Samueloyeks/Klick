@@ -43,19 +43,19 @@
                 <h2>{{item.username}} sent you a request</h2>
                 <div>
                 <p style="display:inline-block">{{item.age}} years old</p> 
-                <p style="font-size: small;display:inline-block;float:right" item-right> {{requestDates[i].reqDate | timeAgo}}</p><p style="float:right;font-size: larger"> . </p>
+                <p style="font-size: small;display:inline-block;float:right;margin:0px" item-right> {{requestDates[i].reqDate | timeAgo}}</p>
                 </div>
           </ion-item>
 
 
 
           <ion-item-sliding *ngFor="let item of myAccepts;let i=index">
-            <ion-item (click)="presentActionSheet()">
+            <ion-item >
               <ion-avatar item-start>
                 <img src="../assets/imgs/background.jpg">
               </ion-avatar>
               <h2>{{item.username}} accepted your request</h2>
-              <p style="font-size: small;display:inline-block;float:right" item-right> {{acceptDates[i].acceptDate | timeAgo}}</p><p style="float:right;font-size: larger"> . </p>
+              <div><p style="font-size: small;display:inline-block;float:right;margin:0px" item-right> {{acceptDates[i].acceptDate | timeAgo}}</p></div>
             </ion-item>
   
   

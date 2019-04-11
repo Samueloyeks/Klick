@@ -23,10 +23,22 @@ export class FriendProfilePage {
   }
 
   ionViewWillEnter() {
-    this.platform.ready().then(() => {
+    // this.platform.ready().then(() => {
       this.menuCtrl.enable(false, 'myMenu');
       this.menuCtrl.swipeEnable(false);
-    })
+
+      this.profileService.getFriendProfile(this.friendUid).on('value', friendProfileSnapshot => {
+        this.friendProfile = friendProfileSnapshot.val();
+         console.log(this.friendProfile)
+         this.gender = friendProfileSnapshot.val().gender;
+         console.log(this.gender);
+         if(this.gender =="Male"){
+           this.genderWord ="his";
+         }else if(this.gender =="Female"){
+           this.genderWord ="her";
+         }
+       });
+    // })
 
   }
 
@@ -42,17 +54,7 @@ export class FriendProfilePage {
 
   ngOnInit() {
     this.platform.ready().then(() => {
-    this.profileService.getFriendProfile(this.friendUid).on('value', friendProfileSnapshot => {
-     this.friendProfile = friendProfileSnapshot.val();
-      console.log(this.friendProfile)
-      this.gender = friendProfileSnapshot.val().gender;
-      console.log(this.gender);
-      if(this.gender =="Male"){
-        this.genderWord ="his";
-      }else if(this.gender =="Female"){
-        this.genderWord ="her";
-      }
-    });
+
   })
   }
 

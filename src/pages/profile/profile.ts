@@ -6,6 +6,9 @@ import { ProfileServiceProvider } from '../../providers/profile-service/profile-
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { UpdateStatusPage } from '../update-status/update-status';
 import { Platform } from 'ionic-angular/platform/platform';
+import { Events } from 'ionic-angular'
+import * as firebase from 'firebase';
+
 
 
 @IonicPage()
@@ -21,8 +24,10 @@ export class ProfilePage {
   public userInfo: any;
   public userMetadata: any;
   public status: any;
+  public username: firebase.database.Reference;
 
-  constructor(public menuCtrl: MenuController, public navCtrl: NavController,
+
+  constructor(public menuCtrl: MenuController, public navCtrl: NavController,public events:Events,
     public navParams: NavParams, public profileService: ProfileServiceProvider, public platform: Platform) {
 
   }
@@ -40,15 +45,18 @@ export class ProfilePage {
     this.menuCtrl.swipeEnable(true);
   }
   ngOnInit() {
-    this.profileService.getUserProfile().on('value', userProfileSnapshot => {
+    firebase.database().ref(`/userProfile/${firebase.auth().currentUser.uid}`).on('value', userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.val();
       this.birthDate = userProfileSnapshot.val().dob;
+
+      this.username = userProfileSnapshot.val().username;
 
     });
     this.profileService.getUserInfo().on('value', userInfoSnapshot => {
       this.userInfo = userInfoSnapshot.val();
     });
     this.createdAt = this.profileService.getMetadata().creationTime;
+    // this.profileService.getUserProfile()
   }
 
   navigateToEditProfile() {

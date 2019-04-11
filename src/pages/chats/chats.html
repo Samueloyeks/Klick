@@ -1,28 +1,41 @@
- 
-<ion-content #myContent> 
-    <ion-list-header>
-        <h1>ACTIVE</h1>
-        <ion-searchbar  [(ngModel)]="searchstring" (input)="searchUser($event)" placeholder="Search" [ngClass]="{'opaque':isScroll<60}"></ion-searchbar>
-      </ion-list-header>
 
-      <!-- <shrinking-segment-header [scrollArea]="myContent" headerHeight="150">
+<ion-content #myContent>
+  <ion-list-header>
+    <h1>ACTIVE</h1>
+    <ion-searchbar [(ngModel)]="searchstring" (input)="searchUser($event)"
+      placeholder="Search" [ngClass]="{'opaque':isScroll<60}"></ion-searchbar>
+  </ion-list-header>
+
+  <!-- <shrinking-segment-header [scrollArea]="myContent" headerHeight="150">
       </shrinking-segment-header> -->
+  <ion-list>
+    <ion-item *ngFor="let item of myTempFriends;let i= index"
+      (click)="matchChat(item)">
+      <ion-avatar item-left>
+        <img src="../assets/imgs/background.jpg">
+      </ion-avatar>
+      <div class="time">
+        <h3>{{item.username}}</h3>
+        <p *ngIf="lastMsgArr[i]">{{lastMsgArr[i][lastMsgArr[i].length-1].time}}</p>
+      </div>
 
-    <ion-list>
-        <ion-item  *ngFor="let item of myTempFriends " (click)="matchChat(item)">
-          <ion-avatar item-left>
-            <img src="../assets/imgs/background.jpg">
-          </ion-avatar>
-          <div class="time">
-            <h3>{{item.username}}</h3>
-            <p>2:22AM</p>
-          </div>
-    
-          <div *ngFor="let id of tempFriendsuid">
-            <p id="lastMessage" *ngIf="id === item.uid">{{lastMessage}}</p>
-          </div>
-        </ion-item>
-      </ion-list>    
+      <div *ngIf="lastMsgArr[i]">
+        <ion-icon class="msgIcon" name="done-all"
+          *ngIf="lastMsgArr[i][lastMsgArr[i].length-1].sentBy==userId &&
+          lastMsgArr[i][lastMsgArr[i].length-1][userId]==0 &&
+          lastMsgArr[i][lastMsgArr[i].length-1][item.uid]==0"></ion-icon>
+        <ion-icon class="msgIcon" name="water"
+          *ngIf="lastMsgArr[i][lastMsgArr[i].length-1].sentBy==item.uid &&
+          lastMsgArr[i][lastMsgArr[i].length-1][item.uid]==0 &&
+          lastMsgArr[i][lastMsgArr[i].length-1][userId]==1"></ion-icon>
+        <ion-icon class="msgIcon" name="checkmark"
+          *ngIf="lastMsgArr[i][lastMsgArr[i].length-1].sentBy==userId &&
+          lastMsgArr[i][lastMsgArr[i].length-1][item.uid]==1 &&
+          lastMsgArr[i][lastMsgArr[i].length-1][userId]==0"></ion-icon>
+        <p id="lastMessage" style="display:inline-block">{{lastMsgArr[i][lastMsgArr[i].length-1].message}}</p>
+      </div>
+    </ion-item>
+  </ion-list>
 
-  
+
 </ion-content>

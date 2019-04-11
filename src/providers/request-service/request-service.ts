@@ -91,11 +91,15 @@ export class RequestServiceProvider {
   getMyRequests() {
     let allMyRequests;
     var myRequests = [];
+    this.requesterDetails = [];
       //get all the user's requests from firebase
       this.fireReq.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
-        var reqDetails = [];
+        
         allMyRequests = snapshot.val();
-       if(snapshot.val()!==null){
+       if(snapshot.val()){
+        myRequests = [];
+        var reqDetails = [];
+        this.reqDates =[];
         for (var i in allMyRequests) {
           //put uid of all request senders in array myRequests
           myRequests.push(allMyRequests[i].sender, allMyRequests[i].isSeen);
@@ -172,10 +176,12 @@ export class RequestServiceProvider {
   }
 
   getTempFriends() {
+    this.myTempFriends = [];
     let tempFriendsuid = []
     this.matches.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
       let allTempFriends = snapshot.val();
       this.myTempFriends = [];
+      let tempFriendsuid = []
       for (var i in allTempFriends)
         tempFriendsuid.push(allTempFriends[i].uid);
 
@@ -199,30 +205,33 @@ export class RequestServiceProvider {
   getRequestSenders() {
     let tempFriendsuid = []
     this.matches.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
-      let allTempFriends = snapshot.val();
-      this.requestSenders = [];
-      for (var i in allTempFriends)
-        tempFriendsuid.push(allTempFriends[i].uid);
+  if(snapshot.val()){
+    let allTempFriends = snapshot.val();
+    this.requestSenders = [];
+    for (var i in allTempFriends)
+      tempFriendsuid.push(allTempFriends[i].uid);
 
-      if (allTempFriends[i].request == "Sender") {
-        this.FirebaseService.getMatches().then((matches) => {
-          this.requestSenders = [];
-          for (var j in tempFriendsuid)
-            for (var key in matches) {
-              if (tempFriendsuid[j] === matches[key].uid) {
-                this.requestSenders.push(matches[key]);
-              }
+    if (allTempFriends[i].request == "Sender") {
+      this.FirebaseService.getMatches().then((matches) => {
+        this.requestSenders = [];
+        for (var j in tempFriendsuid)
+          for (var key in matches) {
+            if (tempFriendsuid[j] === matches[key].uid) {
+              this.requestSenders.push(matches[key]);
             }
-          this.events.publish('requestSenders')
-        }).catch((err) => {
-          alert(err);
-        })
-      }
+          }
+        this.events.publish('requestSenders')
+      }).catch((err) => {
+        alert(err);
+      })
+    }
+  }
     })
   }
   getRequestReceivers() {
     let tempFriendsuid = []
     this.matches.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
+     if(snapshot.val()){
       let allTempFriends = snapshot.val();
       this.requestReceivers = [];
       for (var i in allTempFriends)
@@ -242,6 +251,7 @@ export class RequestServiceProvider {
           alert(err);
         })
       }
+     }
     })
   }
 
@@ -249,9 +259,12 @@ export class RequestServiceProvider {
     let allMyAccepts;
     var myAccepts = [];
     this.acceptedTemp.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
-      var AcceptDetails = [];
+      
       allMyAccepts = snapshot.val();
-    if(snapshot.val()!==null){
+    if(snapshot.val()){
+      myAccepts = [];
+      var AcceptDetails = [];
+      this.acceptDates=[];
       for (var i in allMyAccepts) {
         myAccepts.push(allMyAccepts[i].uid, allMyAccepts[i].isSeen);
         AcceptDetails.push({ accept_isSeen: allMyAccepts[i].isSeen });

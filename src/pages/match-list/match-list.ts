@@ -28,8 +28,10 @@ export class MatchListPage {
     this.ageRange = navParams.get('ageRange');
     this.matchGender = navParams.get('matchGender');
     this.FirebaseService.getAllMatches(this.distance, this.ageRange, this.matchGender).then((res: any) => {
+      this.filteredMatches=[]
       this.filteredMatches = res;
       this.temparr = res;
+      console.log(this.filteredMatches)
     })
   }
 

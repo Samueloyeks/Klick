@@ -4,9 +4,11 @@ import { RequestServiceProvider } from '../../providers/request-service/request-
 import { ChatProvider } from '../../providers/chat/chat';
 import { ChattingPage } from '../chatting/chatting';
 import * as firebase from 'firebase'
+import { ProfileServiceProvider } from '../../providers/profile-service/profile-service';
+import { IfObservable } from 'rxjs/observable/IfObservable';
 
 
- 
+
 
 
 
@@ -29,34 +31,62 @@ export class ChatsPage {
   id = String;
   messages;
   lastMessage;
+  lastMessageTime;
   msgs = [];
   searchbox;
+  username;
+  allChats;
+  chatsArr = [];
+  msgArr = [];
+  lastMsgArr= []
+  allMatchMessages = []
+  userId = firebase.auth().currentUser.uid
+  chatId=[]
 
-  
   public personalMessages = firebase.database().ref(`/matchChats/${firebase.auth().currentUser.uid}`);
   section: string = 'two';
   somethings: any = new Array(20);
-  
+
   constructor(public zone: NgZone, public app: App, public chatService: ChatProvider,
     public menuCtrl: MenuController, public RequestService: RequestServiceProvider,
-    public events: Events, public navCtrl: NavController, public navParams: NavParams) {
-      this.RequestService.getMyRequests();
+    public events: Events, public navCtrl: NavController, public profileService: ProfileServiceProvider, public navParams: NavParams) {
+    this.RequestService.getMyRequests();
     this.RequestService.getAcceptResponse();
-  
-  }
-  getLastMessage(){
-    var tempChats=[]
-    this.matchChats.child(firebase.auth().currentUser.uid).on('value',(snapshot)=>{
-      var messages=[];
-      var temp=snapshot.val();
-      for(var tempkey in temp){
-       messages.push(temp[tempkey]);
-       console.log(messages)
+    
+    this.RequestService.getTempFriends();
+    this.chatService.getAllMatchMessages();
+
+    this.events.subscribe('allMatchMessages', () => {
+      this.allMatchMessages = []
+      this.chatsArr = []
+      this.msgArr = []
+      this.lastMsgArr= []
+      this.allMatchMessages = this.chatService.allMatchMessages;
+      console.log(this.allMatchMessages) 
+      
+      if (this.allMatchMessages.length) {
+        for (let i = 0; i < this.allMatchMessages.length; i++) {
+          this.msgArr.push(this.allMatchMessages[i])
+        }
+
+        for (let j = 0; j < this.msgArr.length; j++) {
+          this.chatsArr.push(this.objectToArray(this.msgArr[j]))
+        }
+
+        for (let k = 0; k < this.chatsArr.length; k++) {
+          this.lastMsgArr.push(this.objectToArray(this.chatsArr[k]))
+        }
+
       }
+
     })
+    this.lastMsgArr= []
+
   }
- 
-  
+
+  ionViewDidEnter() {
+    this.chatService.getAllMatchMessages();
+  }
 
 
   ionViewWillEnter() {
@@ -66,45 +96,37 @@ export class ChatsPage {
       this.myTempFriends = [];
       this.myTempFriends = this.RequestService.myTempFriends;
       this.temparr = this.RequestService.myTempFriends;
-      console.log(this.myTempFriends)
-    
-        this.tempFriendsuid = [];
-        this.tempFriendsuid=this.myTempFriends.map(personObj => personObj.uid);
-        console.log(this.tempFriendsuid)
 
-        for (var k in this.tempFriendsuid) {       
-          this.personalMessages.child(this.tempFriendsuid[k]).on('value', (snapshot) => {
-            this.allMessages = []
-            this.messages = snapshot.val();
-            this.allMessages.push(this.messages)
-            const temp1 = this.objectToArray(this.allMessages[this.allMessages.length - 1])
-            if(temp1==null){return}else{
-            this.lastMessage = temp1[temp1.length - 1].message;}
-            console.log(this.lastMessage)
-          })
-        }
-  
+      this.tempFriendsuid = [];
+      this.tempFriendsuid = this.myTempFriends.map(personObj => personObj.uid);
 
+      for (var k in this.tempFriendsuid) {
+        this.personalMessages.child(this.tempFriendsuid[k]).on('value', (snapshot) => {
+          this.allMessages = []
+          this.messages = snapshot.val();
+          this.allMessages.push(this.messages)
+          const temp1 = this.objectToArray(this.allMessages[this.allMessages.length - 1])
+          if (temp1 == null) {
+            return
+          } else {
+            this.lastMessage = temp1[temp1.length - 1].message;
+            this.lastMessageTime = temp1[temp1.length - 1].time;
+          }
+        })
+      }
     })
   }
 
-
-
-
-  objectToArray(obj: Object) : Array<any> {
-    if( obj==null){
+  objectToArray(obj: Object): Array<any> {
+    if (obj == null) {
       return null;
     }
     return Array.from(Object.keys(obj), k => obj[k]);
   }
-  // arrayToObject = (array) =>
-  // array.reduce((obj, item) => {
-  //    obj[item.uid] = item
-  //    return obj
-  //  }, {})
 
-  ionViewDidLeave() {
+  ionViewDidLeave() { 
     this.events.unsubscribe('tempFriends');
+    this.events.unsubscribe('allMatchMessages')
   }
 
   matchChat(item) {
@@ -127,20 +149,6 @@ export class ChatsPage {
     })
   }
 
-  ionViewDidEnter() {
-    let temp;
-    this.matchChats.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
-      this.messages = [];
-      temp = snapshot.val();
-      for (var tempkey in temp) {
-        this.messages.push(temp[tempkey]);
-        console.log(this.messages)
-      }
-      this.events.publish('messages');
-    }
-    )
-  }
-
   ionViewWillLeave() {
     this.isScroll = 0;
   }
@@ -153,24 +161,4 @@ export class ChatsPage {
     })
   }
 
-
-
-  // var searchbox={
-  //   topPos_open:0, topPos_close:-50, isOpen:false,
-  //   open:function(){
-  //       var box=document.getElementById("searchbox");
-  //       box.style.top=this.topPos_open+"px";
-  //         document.getElementById("searchfield").focus();
-  //         this.isOpen=true;
-  //   },
-  //   close:function(){
-  //       var box=document.getElementById("searchbox");
-  //       box.style.top=this.topPos_close+"px";
-  //       this.isOpen=false;
-  //   },
-  //   pop:function(){
-  //       !this.isOpen?this.open():this.close();
-  //   },
-   
-  // }
 }

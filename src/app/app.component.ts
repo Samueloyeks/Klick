@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 import { ProfilePage } from '../pages/profile/profile';
 import { ActionSheetController, ToastController } from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
- 
+
 
 import firebase from 'firebase';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -37,23 +37,30 @@ export class MyApp {
   public userProfile: any;
 
 
- 
+
 
 
   @ViewChild(Nav) private nav: Nav;
 
   constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController,
     public FirebaseService: FirebaseServiceProvider,
-    public toastCtrl: ToastController, splashScreen: SplashScreen, public storage: Storage,public events:Events,
-    public loadingCtrl: LoadingController, public profileService: ProfileServiceProvider,public statusBar:StatusBar) {
+    public toastCtrl: ToastController, splashScreen: SplashScreen, public storage: Storage, public events: Events,
+    public loadingCtrl: LoadingController, public profileService: ProfileServiceProvider, public statusBar: StatusBar) {
 
     this.initializeApp();
-  
-  
+
+
   }
 
 
-  
+  ngOnInit() {
+    this.events.subscribe('username', (username) => {
+      console.log(username)
+      console.log('view entered')
+      this.username = username;
+    })
+  }
+ 
 
   navigateToProfile() {
     this.nav.push(ProfilePage)
@@ -61,12 +68,13 @@ export class MyApp {
   navigateToTempFriendsList() {
     this.nav.push(TempFriendsListPage)
   }
-  navigateToTempFriendsList2(){
+  navigateToTempFriendsList2() {
     this.nav.push(TempFriendsList2Page)
   }
   navigateToFriendsList() {
     this.nav.push(FriendsListPage)
   }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.hide();
@@ -96,35 +104,32 @@ export class MyApp {
         }
       });
     });
-
-    this.events.subscribe('username', (username) => {
-      this.username = username;
-    })
   }
+
   presentActionSheet() {
-        const actionSheet = this.actionSheetCtrl.create({
-          title: 'Are you sure you want to Log out?',
-          buttons: [
-            {
-              text: 'Yes',
-              handler: () => {
-                var loader = this.loadingCtrl.create({ content: "Please wait..." });
-                loader.present();
-                this.FirebaseService.logoutUserService();
-                loader.dismiss();
-                this.nav.setRoot(LoginPage);
-              }
-            }, {
-              text: 'Cancel',
-              role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-              }
-            }
-          ]
-        });
-        actionSheet.present();
-      }
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Are you sure you want to Log out?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            var loader = this.loadingCtrl.create({ content: "Please wait..." });
+            loader.present();
+            this.FirebaseService.logoutUserService();
+            loader.dismiss();
+            this.nav.setRoot(LoginPage);
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
 
 
 }

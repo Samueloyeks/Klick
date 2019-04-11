@@ -55,62 +55,135 @@ export class FirebaseServiceProvider {
       firebase.database().ref('/userProfile').orderByChild('uid').once('value', (snapshot) => {
         let temparr = [];
         snapshot.forEach(snap => {
-          firebase.database().ref(`/matches/${firebase.auth().currentUser.uid}`).once('value',snapshot=>{
-          if(snapshot.val()){
-            snapshot.forEach(function(sender){
-              if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid &&snap.key!==sender.val().uid) {
-                temparr.push({
-                  uid: snap.key,
-                  dob: snap.val().dob,
-                  email: snap.val().email,
-                  fullName: snap.val().fullName,
-                  gender: snap.val().gender,
-                  username: snap.val().username,
-                  age: snap.val().age
+          firebase.database().ref(`/requests/${firebase.auth().currentUser.uid}`).once('value', (element) => {
+            // temparr = [];
+            if (element.val()) {
+              console.log("There are requests")
+              element.forEach(function (sender) {
+                firebase.database().ref(`/matches/${firebase.auth().currentUser.uid}`).once('value', snapshot => {
+                  // temparr = [];
+                  if (snapshot.val()) {
+                    console.log("There are requests and matches...pushing this shit")
+                    snapshot.forEach(function (match) {
+                      if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid && snap.key !== match.val().uid && snap.key !== sender.val().sender) {
+                        temparr.push({
+                          uid: snap.key,
+                          dob: snap.val().dob,
+                          email: snap.val().email,
+                          fullName: snap.val().fullName,
+                          gender: snap.val().gender,
+                          username: snap.val().username,
+                          age: snap.val().age
+                        })
+                      }
+                      if (matchGender == "Both") {
+                        if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid && snap.key !== match.val().uid && snap.key !== sender.val().sender) {
+                          temparr.push({
+                            uid: snap.key,
+                            dob: snap.val().dob,
+                            email: snap.val().email,
+                            fullName: snap.val().fullName,
+                            gender: snap.val().gender,
+                            username: snap.val().username,
+                            age: snap.val().age
+                          })
+                          
+                        }
+                      }
+                    })
+                  } else {
+                    console.log("There are requests but no matches...moving on")
+                    if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid && snap.key !== sender.val().sender) {
+                      temparr.push({
+                        uid: snap.key,
+                        dob: snap.val().dob,
+                        email: snap.val().email,
+                        fullName: snap.val().fullName,
+                        gender: snap.val().gender,
+                        username: snap.val().username,
+                        age: snap.val().age
+                      })
+                    }
+                    if (matchGender == "Both") {
+                      if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid && snap.key !== sender.val().sender) {
+                        temparr.push({
+                          uid: snap.key,
+                          dob: snap.val().dob,
+                          email: snap.val().email,
+                          fullName: snap.val().fullName,
+                          gender: snap.val().gender,
+                          username: snap.val().username,
+                          age: snap.val().age
+                        })
+                        
+                      }
+                    }
+                  }
                 })
-              }
-              if (matchGender == "Both") {
-                if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid &&snap.key!==sender.val().uid ) {
-                  temparr.push({
-                    uid: snap.key,
-                    dob: snap.val().dob,
-                    email: snap.val().email,
-                    fullName: snap.val().fullName,
-                    gender: snap.val().gender,
-                    username: snap.val().username,
-                    age: snap.val().age
+              })
+            } else {
+              console.log("No requests ...moving on")
+              firebase.database().ref(`/matches/${firebase.auth().currentUser.uid}`).once('value', snapshot => {
+                if (snapshot.val()) {
+                  console.log("No requests but there are matches")
+                  snapshot.forEach(function (match) {
+                    if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid && snap.key !== match.val().uid) {
+                      temparr.push({
+                        uid: snap.key,
+                        dob: snap.val().dob,
+                        email: snap.val().email,
+                        fullName: snap.val().fullName,
+                        gender: snap.val().gender,
+                        username: snap.val().username,
+                        age: snap.val().age
+                      })
+                    }
+                    if (matchGender == "Both") {
+                      if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid && snap.key !== match.val().uid) {
+                        temparr.push({
+                          uid: snap.key,
+                          dob: snap.val().dob,
+                          email: snap.val().email,
+                          fullName: snap.val().fullName,
+                          gender: snap.val().gender,
+                          username: snap.val().username,
+                          age: snap.val().age
+                        })
+                      }
+                    }
                   })
+                } else {
+                  console.log("No requests and no matches...pushing this shit now")
+                  if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid) {
+                    temparr.push({
+                      uid: snap.key,
+                      dob: snap.val().dob,
+                      email: snap.val().email,
+                      fullName: snap.val().fullName,
+                      gender: snap.val().gender,
+                      username: snap.val().username,
+                      age: snap.val().age
+                    })
+                  }
+                  if (matchGender == "Both") {
+                    if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid) {
+                      temparr.push({
+                        uid: snap.key,
+                        dob: snap.val().dob,
+                        email: snap.val().email,
+                        fullName: snap.val().fullName,
+                        gender: snap.val().gender,
+                        username: snap.val().username,
+                        age: snap.val().age
+                      })
+                    }
+                  }
                 }
-              }
-            })
-          }else{
-            if (snap.val().gender === matchGender && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid) {
-              temparr.push({
-                uid: snap.key,
-                dob: snap.val().dob,
-                email: snap.val().email,
-                fullName: snap.val().fullName,
-                gender: snap.val().gender,
-                username: snap.val().username,
-                age: snap.val().age
               })
             }
-            if (matchGender == "Both") {
-              if ((snap.val().gender == "Male" || snap.val().gender == "Female") && snap.val().age >= ageRange.lower && snap.val().age <= ageRange.upper && snap.key !== firebase.auth().currentUser.uid) {
-                temparr.push({
-                  uid: snap.key,
-                  dob: snap.val().dob,
-                  email: snap.val().email,
-                  fullName: snap.val().fullName,
-                  gender: snap.val().gender,
-                  username: snap.val().username,
-                  age: snap.val().age
-                })
-              }
-            }
-          }
           })
         });
+        console.log(temparr)
         resolve(temparr);
       }).catch(err => {
         reject(err);
@@ -131,7 +204,7 @@ export class FirebaseServiceProvider {
             fullName: snap.val().fullName,
             gender: snap.val().gender,
             username: snap.val().username,
-            age:snap.val().age,
+            age: snap.val().age,
           })
         });
         resolve(temparr);
