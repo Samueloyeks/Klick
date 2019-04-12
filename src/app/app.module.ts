@@ -65,12 +65,12 @@ import { ComponentsModule}from '../components/components.module'
 // import { AutoresizeDirective } from '../directives/autoresize/autoresize';
 
 export const config = {
-  apiKey: "AIzaSyDyvnzAWoSev3N9fDaLcHldWf_JXdpPeas",
-  authDomain: "klick-609a6.firebaseapp.com",
-  databaseURL: "https://klick-609a6.firebaseio.com",
-  projectId: "klick-609a6",
-  storageBucket: "klick-609a6.appspot.com",
-  messagingSenderId: "640952210062"
+  apiKey: "AIzaSyAqMs3_wy6mxxyIVX4KNVdTuFbiVrF7uoA",
+  authDomain: "klick-49db9.firebaseapp.com",
+  databaseURL: "https://klick-49db9.firebaseio.com",
+  projectId: "klick-49db9",
+  storageBucket: "klick-49db9.appspot.com",
+  messagingSenderId: "272076283000"
 };
 firebase.initializeApp(config);
  

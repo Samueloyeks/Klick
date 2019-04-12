@@ -90,6 +90,7 @@ export class ChatsPage {
 
 
   ionViewWillEnter() {
+    this.chatService.getAllMatchMessages();
     this.RequestService.getTempFriends();
     this.myTempFriends = [];
     this.events.subscribe('tempFriends', () => {

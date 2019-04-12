@@ -10,10 +10,41 @@ export class FirebaseServiceProvider {
   public fireAuth: any;
   public userProfile: any;
   public matches: any = [];
+  userId: String
 
   constructor(private http: Http) {
     this.fireAuth = firebase.auth();
-    this.userProfile = firebase.database().ref('users');
+    this.userProfile = firebase.database().ref('userProfile');
+
+    firebase.auth().onAuthStateChanged( (user)=> {
+      if (!user) {
+        return
+      } else {
+        this.userId = user.uid
+        console.log(this.userId)
+        this.updateOnConnect()
+        this.updateOnDisconnect()
+      }
+    })
+  }
+
+  updateStatus(status: String) {
+    if (!this.userId) {
+      return
+    } else {
+      this.userProfile.child(this.userId).update({ onlineStatus: status })
+    }
+  }
+
+  updateOnConnect() {
+    firebase.database().ref(`.info/connected`).on('value', connected => {
+      let status = connected.val() ? 'online' : 'offline'
+      this.updateStatus(status)
+    })
+  }
+
+  updateOnDisconnect() {
+    this.userProfile.child(this.userId).onDisconnect().update({ onlineStatus: 'offline' })
   }
 
   loginUserService(email: string, password: string): Promise<void> {
@@ -23,6 +54,7 @@ export class FirebaseServiceProvider {
 
   logoutUserService(): Promise<void> {
     const userId: string = firebase.auth().currentUser.uid;
+    this.updateStatus('offline')
     firebase.database().ref(`/userProfile/${userId}`).off();
     return firebase.auth().signOut();
   }
@@ -87,7 +119,7 @@ export class FirebaseServiceProvider {
                             username: snap.val().username,
                             age: snap.val().age
                           })
-                          
+
                         }
                       }
                     })
@@ -115,7 +147,7 @@ export class FirebaseServiceProvider {
                           username: snap.val().username,
                           age: snap.val().age
                         })
-                        
+
                       }
                     }
                   }

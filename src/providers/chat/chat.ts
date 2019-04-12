@@ -81,34 +81,36 @@ export class ChatProvider {
           matchArr.push(snap.val().uid)
         })
       })
-
-    })
-
-    this.matchChats.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
-      let chatArr = []
-      this.allMatchMessages = []
-      snapshot.forEach(function (snap) {
-        let key = snap.key
-        chatArr.push(key)
-      })
       console.log(matchArr)
-      console.log(chatArr); 
-
-      if (snapshot.val()) {
-        for (var match of matchArr) {
-          if (chatArr.indexOf(match) > -1) {
-            this.matchChats.child(firebase.auth().currentUser.uid).child(match).orderByChild('uid').once('value', (snapshot) => {
-              this.allMatchMessages.push(snapshot.val());
-            })
-          } else {
-            this.allMatchMessages.push({})
+    }).then(()=>{
+      this.matchChats.child(firebase.auth().currentUser.uid).on('value', (snapshot) => {
+        let chatArr = []
+        this.allMatchMessages = []
+        snapshot.forEach(function (snap) {
+          let key = snap.key
+          chatArr.push(key)
+        })
+        console.log(matchArr)
+        console.log(chatArr); 
+  
+        if (snapshot.val()) {
+          for (var match of matchArr) {
+            if (chatArr.indexOf(match) > -1) {
+              this.matchChats.child(firebase.auth().currentUser.uid).child(match).orderByChild('uid').once('value', (snapshot) => {
+                this.allMatchMessages.push(snapshot.val());
+              })
+            } else {
+              this.allMatchMessages.push({})
+            }
           }
+          console.log(this.allMatchMessages)
+          this.events.publish('allMatchMessages');
         }
-        console.log(this.allMatchMessages)
-        this.events.publish('allMatchMessages');
-      }
- 
+   
+      })
     })
+
+
 
 
   }

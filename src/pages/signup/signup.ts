@@ -85,6 +85,7 @@ export class SignupPage {
       status: "Hey there, I'm new on klick",
       lat:this.locationTracker.lat,
       lng:this.locationTracker.lng,
+      onlineStatus:"online",
     };
     console.log(account)
 
